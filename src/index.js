@@ -11,16 +11,31 @@ import logger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 import { takeEvery, put } from 'redux-saga/effects'
 import axios from 'axios';
+
+
 // Create the rootSaga generator function
 function* rootSaga() {
-  yield takeEvery('GET_IMAGES',getImages) 
+  yield takeEvery('GET_IMAGES',getImages);
+  yield takeEvery('GET_TAGS',getTags);
 }
 
+//collecting all images from database
 function* getImages() {
     try {
         let imagesResponse = yield axios.get('/api/images')
         console.log(imagesResponse);
         yield put({ type: 'SET_IMAGES', payload: imagesResponse.data })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+//collecting all tags from database
+function* getTags(){
+    try {
+        let tagResponse = yield axios.get('/api/tags')
+        console.log(tagResponse);
+        yield put({ type: 'SET_TAGS', payload: tagResponse.data })
     } catch (error) {
         console.log(error)
     }
