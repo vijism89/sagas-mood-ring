@@ -57,9 +57,6 @@ function* getImageTags(action) {
 }
 function* postTags(action){
     try {
-        // let imageTagObject = {
-        //     ...this.props.reduxState.feedbackReducer
-        // }
         yield axios.post('/api/imagetags',action.payload)
        const imageTagsResponse = yield axios.get(`/api/imagetags/${action.payload.images_id}`)
         yield put({type:'SET_IMAGETAGS', payload:imageTagsResponse.data})
@@ -70,9 +67,6 @@ function* postTags(action){
 //delete tags
 function* deleteTags(action){
     try {
-        // let imageTagObject = {
-        //     ...this.props.reduxState.feedbackReducer
-        // }
         yield axios.delete('/api/imagetags',action.payload)
        const deleteResponse = yield axios.get(`/api/imagetags/${action.payload.tags_id}`)
         yield put({type:'SET_IMAGETAGS', payload:deleteResponse.data})

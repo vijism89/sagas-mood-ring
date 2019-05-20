@@ -24,3 +24,19 @@ VALUES
 ('Inspirational'),
 ('Frantic'),
 ('Vertigo');
+
+CREATE TABLE "images_tags" (
+  "id" SERIAL PRIMARY KEY,
+  "images_id" INT REFERENCES "images",
+  "tags_id" INT REFERENCES "tags"
+);
+
+INSERT INTO "images_tags" ("images_id","tags_id")
+VALUES('1','1'),('1','2'),('2','1'),('2','2'),('3','3'),('3','4'),('4','2'),('4','3'),('5','5'),('5','4');
+
+SELECT * FROM "tags"
+JOIN "images_tags" ON images_tags.tags_id = tags.id
+WHERE "images_tags".images_id = 1;
+
+INSERT INTO "images_tags" ("images_id", "tags_id")
+        VALUES ('1', '5');
