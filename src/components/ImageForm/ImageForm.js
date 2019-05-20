@@ -4,11 +4,13 @@ import './ImageForm.css';
 
 
 class ImageForm extends Component {
+    //local state to hold some objects
     state = {
         selectedImage: 0,
         tags_id: '',
         images_id: ''
     }
+    //function to update the tags
     handleChange = (event) => {
         console.log(event.target.value);
         this.setState({
@@ -18,6 +20,7 @@ class ImageForm extends Component {
     //this function will increase the value by 1
     handleNextClick = () => {
         this.setState((state) => {
+            //increase the value by 1 if the image index is 0
             return { selectedImage: state.selectedImage === 4 ? 0 : state.selectedImage + 1 }
         });
         // this.props.dispatch({ type: 'GET_IMAGES'})
@@ -25,6 +28,7 @@ class ImageForm extends Component {
     //this will decrease my value by 1
     handlePreviewClick = () => {
         this.setState((state) => {
+            //decrease the value by 1 if the image index is 4
             return { selectedImage: state.selectedImage === 0 ? 4 : state.selectedImage - 1 }
         });
     }
@@ -47,16 +51,27 @@ class ImageForm extends Component {
         this.props.dispatch({ type: 'GET_IMAGETAGS', payload: imageId })
     }
 
+    handleDelete = (idToDelete) => {
+           this.setState({
+               tags_id: '' + idToDelete
+           });
+           this.props.dispatch({ type: 'DELETE_TAGS',payload: idToDelete})
+    }
+
     render() {
         return (
 
             <div>
                 <div className="outerDiv">
                     <div className="imageDiv">
+                    {/*mapping the images array and displaying them by index */}
                         {this.props.reduxState.images.map((image, index) => {
+                            {/*checking the state which image to display */}
                             return index === this.state.selectedImage ? (
-                                <div><h3>Image Title: {image.title}</h3><img className="imageDesign" src={image.path} alt={image.id}
-                                    onLoad={() => this.getImageTags(image.id)} />  </div>
+                                <div><h3>Image Title: {image.title}</h3>
+                                <img className="imageDesign" 
+                                src={image.path} alt={image.id}
+                                onLoad={() => this.getImageTags(image.id)} />  </div>
                             ) : '';
                         })}
                     </div>
@@ -68,7 +83,7 @@ class ImageForm extends Component {
                     </div>
                 </div>
                 <div className="outerDiv">
-                    
+
                     <div className="selectTag">
                         <select value={this.props.reduxState.tags.tags_id}
                             onChange={this.handleChange} >
@@ -81,14 +96,15 @@ class ImageForm extends Component {
                         </select>
                     </div>
                     <div className="clickTag">
-                            <button onClick={this.handleTagClick}>Apply Tag</button>
+                        <button onClick={this.handleTagClick}>Apply Tag</button>
                     </div>
                     <div className="displayTags">
                         <p>Tags</p>
-
                         {this.props.reduxState.imageTags.map(imageTag => {
                             return (
-                                <li>{imageTag.name}</li>
+                                <li>{imageTag.name}
+                                    <button value={imageTag.id} onClick={this.handleDelete}>Delete</button>
+                                </li>
                             )
                         })}
                     </div>
