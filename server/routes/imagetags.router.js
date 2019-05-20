@@ -17,4 +17,31 @@ router.get('/:id', (req,res) => {
         })
 }
 )
+ 
+router.post('/',async (req, res) => {
+    console.log('Imagetag POST with', req.body);
+    const client = await pool.connect();
+    try {
+        const {
+        selectedImage,
+        tags_id,
+        images_id
+        } = req.body;
+        console.log([tags_id])
+        console.log([images_id])
+        await client.query('BEGIN')
+        await client.query (`INSERT INTO "images_tags" ("images_id", "tags_id")
+        VALUES ($1, $2)`, [images_id,tags_id]);
+        await client.query('COMMIT')
+        res.sendStatus(201);
+    } catch (error) {
+        await client.query('ROLLBACK')
+        console.log('Error POST /imagetags', error);
+        res.sendStatus(500);
+    } finally {
+        client.release()
+    }
+    
+}); // END Route
+
 module.exports = router;

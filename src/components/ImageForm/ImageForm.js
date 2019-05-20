@@ -5,7 +5,9 @@ import './ImageForm.css';
 
 class ImageForm extends Component {
     state = {
-        selectedImage: 0
+        selectedImage: 0,
+        tags_id: '',
+        images_id: ''
     }
     handleChange = (event) => {
         console.log(event.target.value);
@@ -26,13 +28,16 @@ class ImageForm extends Component {
             return { selectedImage: state.selectedImage === 0 ? 4 : state.selectedImage - 1 }
         });
     }
-
+    //this will get my tags
     handleTagClick = () => {
-        this.props.dispatch({ type: 'GET_TAGS' })
+        this.props.dispatch({ type: 'POST_TAGS',payload: this.state })
     }
-
+    //this will return my image with the tags
     getImageTags = (imageId) => {
-        console.log(imageId)
+        console.log(imageId);
+        this.setState({
+            images_id:'' + imageId
+        });
         this.props.dispatch({ type: 'GET_IMAGETAGS', payload: imageId })
     }
 
@@ -46,7 +51,8 @@ class ImageForm extends Component {
                     <div className="imageDiv">
                         {this.props.reduxState.images.map((image, index) => {
                             return index === this.state.selectedImage ? (
-                                <img className="imageDesign" src={image.path} alt={image.id} onLoad={() => this.getImageTags(image.id)} />
+                                <img className="imageDesign" src={image.path} alt={image.id} 
+                                onLoad={() => this.getImageTags(image.id)} />
                             ) : '';
                         })}
                     </div>
@@ -55,7 +61,8 @@ class ImageForm extends Component {
                     </div>
                 </div>
                 <div>
-                    <select value={this.props.reduxState.tags.tags_id} onChange={this.handleChange}>
+                    <select value={this.props.reduxState.tags.tags_id} 
+                    onChange={this.handleChange} >
                         <option value="0">Tag Name</option>
                         {this.props.reduxState.tags.map(tag => {
                             return (
