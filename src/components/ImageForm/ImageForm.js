@@ -32,31 +32,31 @@ class ImageForm extends Component {
     handleTagClick = () => {
         const result = this.props.reduxState.tags.filter(tag => tag.id === this.state.tags_id);
         console.log(result);
-        if(result.length > 0){
+        if (result.length > 0) {
             alert('Image Already Tagged');
-        }else{
-        this.props.dispatch({ type: 'POST_TAGS',payload: this.state })
+        } else {
+            this.props.dispatch({ type: 'POST_TAGS', payload: this.state })
         }
     }
     //this will return my image with the tags
     getImageTags = (imageId) => {
         console.log(imageId);
         this.setState({
-            images_id:'' + imageId
+            images_id: '' + imageId
         });
         this.props.dispatch({ type: 'GET_IMAGETAGS', payload: imageId })
     }
 
     render() {
         return (
-            
+
             <div>
                 <div className="outerDiv">
                     <div className="imageDiv">
                         {this.props.reduxState.images.map((image, index) => {
                             return index === this.state.selectedImage ? (
-                                <div><h3>Image Title: {image.title}</h3><img className="imageDesign" src={image.path} alt={image.id} 
-                                onLoad={() => this.getImageTags(image.id)} />  </div>   
+                                <div><h3>Image Title: {image.title}</h3><img className="imageDesign" src={image.path} alt={image.id}
+                                    onLoad={() => this.getImageTags(image.id)} />  </div>
                             ) : '';
                         })}
                     </div>
@@ -67,31 +67,32 @@ class ImageForm extends Component {
                         <button onClick={this.handleNextClick}>Next</button>
                     </div>
                 </div>
-                <div>
-                    <select value={this.props.reduxState.tags.tags_id} 
-                    onChange={this.handleChange} >
-                        <option value="0">Tag Name</option>
-                        {this.props.reduxState.tags.map(tag => {
+                <div className="outerDiv">
+                    
+                    <div className="selectTag">
+                        <select value={this.props.reduxState.tags.tags_id}
+                            onChange={this.handleChange} >
+                            <option value="0">Tag Name</option>
+                            {this.props.reduxState.tags.map(tag => {
+                                return (
+                                    <option value={tag.id}> {tag.name} </option>
+                                )
+                            })}
+                        </select>
+                    </div>
+                    <div className="clickTag">
+                            <button onClick={this.handleTagClick}>Apply Tag</button>
+                    </div>
+                    <div className="displayTags">
+                        <p>Tags</p>
+
+                        {this.props.reduxState.imageTags.map(imageTag => {
                             return (
-                                <option value={tag.id}> {tag.name} </option>
+                                <li>{imageTag.name}</li>
                             )
                         })}
-                    </select>
-                    <div>
-                        <button onClick={this.handleTagClick}>Apply Tag</button>
                     </div>
                 </div>
-                <div>
-                    <p>Tags</p>
-                    
-                    {this.props.reduxState.imageTags.map(imageTag => {
-                        return (
-                            <li>{imageTag.name}</li>
-                        )
-                    })}
-                    
-                </div>
-
             </div>
         )
     }
