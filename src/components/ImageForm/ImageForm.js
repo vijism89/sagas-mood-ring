@@ -11,11 +11,18 @@ class ImageForm extends Component {
             tags_id:event.target.value
         })
     }
-    handleClick = () => {
+    //this function will increase the value by 1
+    handleNextClick = () => {
         this.setState((state) => {  
-            return {selectedImage: state.selectedImage + 1}
+            return {selectedImage: state.selectedImage === 4 ? 0 : state.selectedImage + 1}
           });
        // this.props.dispatch({ type: 'GET_IMAGES'})
+    }
+    //this will decrease my value by 1
+    handlePreviewClick = () => {
+        this.setState((state) => {
+            return {selectedImage: state.selectedImage === 0 ? 4: state.selectedImage - 1}
+        });
     }
 
     handleTagClick = () => {
@@ -25,8 +32,8 @@ class ImageForm extends Component {
         return (
             <div>
                 <p>form goes here --> </p>
-                <button onClick={this.handleClick} >Previous</button>
-                <button onClick={this.handleClick}>Next</button>
+                <button onClick={this.handlePreviewClick} >Previous</button>
+                <button onClick={this.handleNextClick}>Next</button>
                
                 {this.props.reduxState.images.map((image,index) => {
                         return index === this.state.selectedImage ? (
