@@ -15,12 +15,14 @@ import axios from 'axios';
 
 // Create the rootSaga generator function
 function* rootSaga() {
+    console.log('rootSaga called');
   yield takeEvery('GET_IMAGES',getImages);
   yield takeEvery('GET_TAGS',getTags);
 }
 
 //collecting all images from database
 function* getImages() {
+    console.log('getImageCalled');
     try {
         let imagesResponse = yield axios.get('/api/images')
         console.log(imagesResponse);
@@ -32,6 +34,7 @@ function* getImages() {
 
 //collecting all tags from database
 function* getTags(){
+    console.log('getTagsCalled');
     try {
         let tagResponse = yield axios.get('/api/tags')
         console.log(tagResponse);

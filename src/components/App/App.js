@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
 import ImageForm from '../ImageForm/ImageForm';
+import { connect } from 'react-redux'
 
 class App extends Component {
+  componentDidMount(){
+    this.props.dispatch({type:'GET_IMAGES'});
+    this.props.dispatch({type:'GET_TAGS'});
+  }
   // Renders the entire app on the DOM
   render() {
     return (
@@ -15,4 +20,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect()(App);
