@@ -20,6 +20,7 @@ function* rootSaga() {
   yield takeEvery('GET_TAGS',getTags);
   yield takeEvery('GET_IMAGETAGS',getImageTags);
   yield takeEvery('POST_TAGS',postTags);
+  yield takeEvery('DELETE_TAGS',deleteTags);
 }
 
 //collecting all images from database
@@ -62,6 +63,19 @@ function* postTags(action){
         yield axios.post('/api/imagetags',action.payload)
        const imageTagsResponse = yield axios.get(`/api/imagetags/${action.payload.images_id}`)
         yield put({type:'SET_IMAGETAGS', payload:imageTagsResponse.data})
+    }catch (error) {
+        console.log(error)
+    }
+}
+//delete tags
+function* deleteTags(action){
+    try {
+        // let imageTagObject = {
+        //     ...this.props.reduxState.feedbackReducer
+        // }
+        yield axios.delete('/api/imagetags',action.payload)
+       const deleteResponse = yield axios.get(`/api/imagetags/${action.payload.tags_id}`)
+        yield put({type:'SET_IMAGETAGS', payload:deleteResponse.data})
     }catch (error) {
         console.log(error)
     }
