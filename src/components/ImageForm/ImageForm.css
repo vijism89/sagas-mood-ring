@@ -3,21 +3,24 @@
     width: 300px;
 }
 
-/* .outerDiv {
-    display: table;
-    clear: both;
-    vertical-align: middle;
+ .outerDiv {
+    position: relative;
   }
  
   .previousClick {
-    vertical-align: left;
-    width: 33.3333%;
+    position: absolute;
+    top: 150px;
+    left: 530px;
   }
+  /*
   .imageDiv {
     vertical-align: middle;
     width: 33.3333%;
   }
+  */
   .nextClick {
-    vertical-align: right;
-    width: 33.3333%;
-  } */
+    position: absolute;
+    top: 150px;
+    right: 560px;
+    font-size: 18px;
+  } 

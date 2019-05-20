@@ -52,9 +52,6 @@ class ImageForm extends Component {
             
             <div>
                 <div className="outerDiv">
-                    <div className="previewClick">
-                        <button onClick={this.handlePreviewClick} >Previous</button>
-                    </div>
                     <div className="imageDiv">
                         {this.props.reduxState.images.map((image, index) => {
                             return index === this.state.selectedImage ? (
@@ -62,6 +59,9 @@ class ImageForm extends Component {
                                 onLoad={() => this.getImageTags(image.id)} />  </div>   
                             ) : '';
                         })}
+                    </div>
+                    <div className="previousClick">
+                        <button onClick={this.handlePreviewClick} >Previous</button>
                     </div>
                     <div className="nextClick">
                         <button onClick={this.handleNextClick}>Next</button>
