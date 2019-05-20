@@ -30,7 +30,13 @@ class ImageForm extends Component {
     }
     //this will get my tags
     handleTagClick = () => {
+        const result = this.props.reduxState.tags.filter(tag => tag.id === this.state.tags_id);
+        console.log(result);
+        if(result.length > 0){
+            alert('Image Already Tagged');
+        }else{
         this.props.dispatch({ type: 'POST_TAGS',payload: this.state })
+        }
     }
     //this will return my image with the tags
     getImageTags = (imageId) => {
