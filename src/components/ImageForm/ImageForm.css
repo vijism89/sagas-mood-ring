@@ -30,12 +30,10 @@
     position: absolute;
     top: 10%;
     right: 30%;
-    font-size: 18px;
   } 
 
   .selectTag {
     position: absolute;
     top: 10%;
     left: 50%;
-    font-size: 18px;
-  }
+    }
