@@ -18,6 +18,7 @@ function* rootSaga() {
     console.log('rootSaga called');
   yield takeEvery('GET_IMAGES',getImages);
   yield takeEvery('GET_TAGS',getTags);
+  yield takeEvery('GET_IMAGETAGS',getImageTags);
 }
 
 //collecting all images from database
@@ -39,6 +40,15 @@ function* getTags(){
         let tagResponse = yield axios.get('/api/tags')
         console.log(tagResponse);
         yield put({ type: 'SET_TAGS', payload: tagResponse.data })
+    } catch (error) {
+        console.log(error)
+    }
+}
+function* getImageTags(action) {
+    console.log(action.payload);
+    try {
+        let imageTag = yield axios.get(`/api/imagetags/${action.payload}`);
+        yield put({ type: 'SET_IMAGETAGS', payload: imageTag.data})
     } catch (error) {
         console.log(error)
     }
@@ -66,11 +76,21 @@ const tags = (state = [], action) => {
     }
 }
 
+const imageTags = (state = [], action) => {
+    switch (action.type) {
+        case 'SET_IMAGETAGS':
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
 // Create one store that all components can use
 const storeInstance = createStore(
     combineReducers({
         images,
         tags,
+        imageTags,
     }),
     // Add sagaMiddleware to our store
     applyMiddleware(sagaMiddleware, logger),

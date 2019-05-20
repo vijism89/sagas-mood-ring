@@ -1,0 +1,33 @@
+.imageDesign {
+    height: 300px;
+    width: 300px;
+}
+
+/* .previewClick {
+    border: 3px solid #73AD21;
+    position: absolute;
+    top:100;
+    left: 100;
+    width: 300;
+
+}
+
+.nextClick {
+    position: absolute;
+    border: 3px solid #73AD21;
+    top: 200;
+    left: 600;
+    width: 300;
+    float:right;
+}
+
+.imageDiv {
+    position: absolute;
+    left: 400;
+    top: 500;
+    width: 300;
+}
+
+.outerDiv {
+    border: 3px solid red;
+} */
