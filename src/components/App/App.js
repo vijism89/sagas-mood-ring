@@ -13,7 +13,7 @@ class App extends Component {
     return (
       <div className="App">
       <h1 className="header"> The Mood Ring </h1>
-      <h3>Image Title</h3>
+      
       <ImageForm />
       </div>
     );

@@ -49,6 +49,7 @@ class ImageForm extends Component {
 
     render() {
         return (
+            
             <div>
                 <div className="outerDiv">
                     <div className="previewClick">
@@ -57,8 +58,8 @@ class ImageForm extends Component {
                     <div className="imageDiv">
                         {this.props.reduxState.images.map((image, index) => {
                             return index === this.state.selectedImage ? (
-                                <img className="imageDesign" src={image.path} alt={image.id} 
-                                onLoad={() => this.getImageTags(image.id)} />
+                                <div><h3>Image Title: {image.title}</h3><img className="imageDesign" src={image.path} alt={image.id} 
+                                onLoad={() => this.getImageTags(image.id)} />  </div>   
                             ) : '';
                         })}
                     </div>
